@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-itunes-app" content="app-id=1491696181">
+    <meta name="description" content="智慧型 App 開啟器 - 自動偵測並開啟 App 或導向商店">
+    <meta property="og:title" content="開啟 App - Smart App Banner Demo">
+    <meta property="og:description" content="智慧型 App 開啟器，支援 iOS 和 Android 平台">
+    <meta property="og:type" content="website">
+    <title>開啟 App - Smart App Banner Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body.has-banner {
+            padding-top: 80px;
+        }
+
+        .app-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #007aff 0%, #5856d6 100%);
+            padding: 12px 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .app-banner.hidden {
+            display: none;
+        }
+
+        .banner-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .app-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #007aff;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .banner-text {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .content-container {
+            width: 100%;
+            height: 100vh;
+            background-color: #f9f9f9;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body.has-banner .content-container {
+            height: calc(100vh - 80px);
+        }
+
+        .content-container svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .content-text {
+            position: relative;
+            z-index: 2;
+            font-size: 48px;
+            font-weight: 300;
+            color: #666;
+            text-align: center;
+            line-height: 1.4;
+        }
+        
+        .desktop-hint {
+            font-size: 24px;
+            color: #999;
+            margin-top: 20px;
+            font-weight: 400;
+        }
+
+        .open-app-btn {
+            background-color: white;
+            color: #007aff;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .open-app-btn:hover {
+            background-color: #f0f0f0;
+            transform: scale(1.05);
+        }
+
+        .open-app-btn:active {
+            transform: scale(0.95);
+        }
+
+        .loader {
+            display: none;
+            width: 12px;
+            height: 12px;
+            border: 2px solid #007aff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .btn-loading .loader {
+            display: block;
+        }
+
+        .btn-loading .btn-text {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .banner-text {
+                font-size: 14px;
+            }
+            
+            .open-app-btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+            
+            .content-text {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 固定橫幅 -->
+    <div class="app-banner" id="appBanner">
+        <div class="banner-content">
+            <div class="app-icon">A</div>
+            <div class="banner-text">使用 APP 瀏覽</div>
+        </div>
+        
+        <button id="openAppBtn" class="open-app-btn" aria-label="開啟應用程式">
+            <span class="btn-text">開啟 App</span>
+            <div class="loader"></div>
+        </button>
+    </div>
+
+    <!-- 內容區塊 -->
+    <div class="content-container">
+        <svg>
+            <line x1="0" y1="0" x2="100%" y2="100%" stroke="#d0d0d0" stroke-width="4"/>
+            <line x1="100%" y1="0" x2="0" y2="100%" stroke="#d0d0d0" stroke-width="4"/>
+        </svg>
+        <div class="content-text">網頁內容</div>
+    </div>
+
+    <script src="app-opener.js"></script>
+</body>
+</html>
